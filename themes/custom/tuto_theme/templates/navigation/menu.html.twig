@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Theme override to display a menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link URL, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ */
+#}
+{% import _self as menus %}
+
+{#
+  We call a macro which calls itself to render the full tree.
+  @see https://twig.symfony.com/doc/3.x/tags/macro.html
+#}
+{{ menus.menu_links(items, attributes, 0) }}
+
+{% macro menu_links(items, attributes, menu_level) %}
+  {% import _self as menus %}
+  {% if items %}
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+          {% for item in items %}
+            {%
+              set classes = [
+                'nav-item nav-link',
+                item.is_expanded ? 'menu-item--expanded',
+                item.is_collapsed ? 'menu-item--collapsed',
+                item.in_active_trail ? 'active',
+              ]
+            %}
+            {% if item.below %}
+            <div class="nav-item dropdown">
+              {{ link(item.title, item.url, item.attributes.addClass(classes).addClass('dropdown-toggle').setAttribute('data-bs-toggle', 'dropdown')) }}
+            {% else %}
+              {{ link(item.title, item.url, item.attributes.addClass(classes)) }}
+            {% endif %}
+            {% if item.below and item.below|length > 0 %}
+                <div class="dropdown-menu fade-down m-0">
+                  {% for child_item in item.below %}
+                    {{ link(child_item.title, child_item.url, {'class': 'dropdown-item'}) }}
+                  {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+    </div>
+  {% endif %}
+{% endmacro %}
