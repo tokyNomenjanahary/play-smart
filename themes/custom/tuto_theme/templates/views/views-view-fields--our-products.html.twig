@@ -1,0 +1,66 @@
+{#
+/**
+ * @file
+ * Theme override to display all the fields in a row.
+ *
+ * Available variables:
+ * - view: The view in use.
+ * - fields: A list of fields, each one contains:
+ *   - content: The output of the field.
+ *   - raw: The raw data for the field, if it exists. This is NOT output safe.
+ *   - class: The safe class ID to use.
+ *   - handler: The Views field handler controlling this field.
+ *   - inline: Whether or not the field should be inline.
+ *   - wrapper_element: An HTML element for a wrapper.
+ *   - wrapper_attributes: List of attributes for wrapper element.
+ *   - separator: An optional separator that may appear before a field.
+ *   - label: The field's label text.
+ *   - label_element: An HTML element for a label wrapper.
+ *   - label_attributes: List of attributes for label wrapper.
+ *   - label_suffix: Colon after the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ *   - has_label_colon: A boolean indicating whether to display a colon after
+ *     the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ * - row: The raw result from the query, with all data it fetched.
+ *
+ * @see template_preprocess_views_view_fields()
+ */
+#}
+<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="course-item bg-light">
+        <div class="position-relative overflow-hidden">
+            {% set images = fields.field_pictures.content %}
+            {% set first_image = images %}
+            {% set image_with_class = first_image|replace({'<img': '<img class="img-fluid" '}) %}
+            {{ image_with_class|raw }}
+            <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+                <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Voir</a>
+                <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Pannier</a>
+            </div>
+        </div>
+        <div class="text-center p-4 pb-0">
+            <h3 class="mb-0">{{ fields.field_price.content }}</h3>
+            <div class="mb-3">
+                <small class="fa fa-star text-primary"></small>
+                <small class="fa fa-star text-primary"></small>
+                <small class="fa fa-star text-primary"></small>
+                <small class="fa fa-star text-primary"></small>
+                <small class="fa fa-star text-primary"></small>
+                <small>(123)</small>
+            </div>
+            <div class="mb-4">
+            {% set link = fields.field_title.content %}
+            {% set link_with_class = link|replace({'<a': '<a class="h5" '}) %}
+            {{ link_with_class|raw }}
+            </div>
+        </div>
+        <div class="d-flex border-top">
+            <small class="flex-fill text-center border-end py-2"><i class="fa fa-user-tie text-primary me-2"></i>John Doe</small>
+            <small class="flex-fill text-center border-end py-2"><i class="fa fa-clock text-primary me-2"></i>1.49 Hrs</small>
+            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>30 Students</small>
+        </div>
+    </div>
+</div>

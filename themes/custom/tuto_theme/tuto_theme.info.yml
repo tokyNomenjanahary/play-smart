@@ -1,0 +1,23 @@
+name: tuto_theme
+type: theme
+'base theme': stable9
+starterkit: true
+libraries:
+  - tuto_theme/base
+core_version_requirement: ^10
+generator: 'starterkit_theme:10.2.5'
+regions:
+  main_navigation: Main navigation
+  header: Header
+  courses: Courses
+  products: Products
+  content: content
+  about_us: About us
+  categories: Categories
+  popular_courses: Popular courses
+  instructors: Instructors
+  testimonials: Testimonials
+  footer_first: Footer first
+  footer_second: Footer second
+  footer_third: Footer third
+  footer_fourth: Footer fourth
